@@ -1,6 +1,7 @@
 %h2
   = @item[:title]
-%iframe{ :src => "/assets/games/#{@item[:slug]}.html", :allow => 'fullscreen', :width => 160, :height => 160, :loading => 'lazy', :title => "#{@item[:title]} videogame" }
+%div.centred
+  %iframe{ :src => "/assets/games/#{@item[:slug]}.html", :allow => 'fullscreen', :width => 160, :height => 160, :loading => 'lazy', :title => "#{@item[:title]} videogame" }
 %p
   = @item[:description]
 %p
