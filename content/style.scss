@@ -118,6 +118,8 @@ main {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 
+  float: left;
+
   p {
     margin: 20px 0;
     font-size: 15px;
@@ -150,7 +152,14 @@ main {
 
 header {
   margin-top: 20ex;
-  margin-bottom: 4ex;
+  margin-right: 3rem;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  float: left;
+  border-right: solid 1px;
+  border-bottom: none;
 
   nav {
     ul {
@@ -168,6 +177,24 @@ header {
         margin-right: 1rem;
         margin-top: 1ex;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 50rem){
+  main {
+    position: relative;
+  }
+  header {
+    margin-top: 1ex;
+    margin-right: 0;
+    position: sticky;
+    float: none;
+    background-color: $palette-background;
+    border-right: none;
+    border-bottom: solid 1px;
+    nav ul li {
+      display: inline;
     }
   }
 }

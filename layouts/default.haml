@@ -8,14 +8,15 @@
     %meta{ :name => 'generator', :content => "Nanoc #{Nanoc::VERSION}" }
     %meta{ :content => 'width=device-width, initial-scale=0.8', :name => 'viewport' }
   %body
-    %header
-      %nav
-        %ul
-          %li
-            = link_to_unless_current('home', '/')
-          %li
-            = link_to_unless_current('minesweeper', '/minesweeper/')
-          %li
-            = link_to_unless_current('cosmo-fighter', '/cosmo-fighter/')
-    %main
-      = yield
+    %div
+      %header
+        %nav
+          %ul
+            %li
+              = link_to_unless_current('home', '/')
+            %li
+              = link_to_unless_current('minesweeper', '/minesweeper/')
+            %li
+              = link_to_unless_current('cosmo-fighter', '/cosmo-fighter/')
+      %main
+        = yield
