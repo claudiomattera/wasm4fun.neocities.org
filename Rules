@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+compile '/index.md' do
+  filter :erb
+  filter :kramdown
+  layout '/games-list.*'
+  layout '/default.*'
+  filter :guess_images_size
+  filter :beautify_html
+
+  write item.identifier.without_ext + '.html'
+end
+
+compile '/not_found.md' do
+  filter :erb
+  filter :kramdown
+  layout '/default.*'
+  filter :guess_images_size
+  filter :beautify_html
+
+  write item.identifier.without_ext + '.html'
+end
+
+compile '/*.md' do
+  filter :erb
+  filter :kramdown
+  layout '/game.*'
+  layout '/default.*'
+  filter :guess_images_size
+  filter :beautify_html
+
+  write item.identifier.without_ext + '/index.html'
+end
+
+compile '/**/*.scss' do
+  filter :sass, syntax: :scss
+  write @item.identifier.without_ext + '.css'
+end
+
+compile '/**/*' do
+  write item.identifier.to_s
+end
+
+layout '/**/*.haml', :haml, :format => :html5, :attr_wrapper => '"'

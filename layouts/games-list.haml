@@ -1,0 +1,12 @@
+= yield
+
+%h2
+  = 'Games'
+
+- @items.select { |item| item[:game] }.each do |item|
+  %h3
+    = item[:title]
+  %a{ :href => "/#{item[:slug]}/" }
+    %img{ :src => "/assets/games/#{item[:slug]}.png", :alt => "#{item[:title]}'s screenshot"}
+  %p
+    = item[:description]

@@ -1,0 +1,173 @@
+
+// https://lospec.com/palette-list/ice-cream-gb
+$palette-foreground: #7c3f58;
+$palette-link: #eb6b6f;
+$palette-active: #f9a875;
+$palette-background: #fff6d3;
+
+// // https://lospec.com/palette-list/bicycle
+// $palette-foreground: #161616;
+// $palette-link: #ab4646;
+// $palette-active: #8f9bf6;
+// $palette-background: #f0f0f0;
+
+// // https://lospec.com/palette-list/dustbyte
+// $palette-foreground: #372a39;
+// $palette-link: #aa644d;
+// $palette-active: #788374;
+// $palette-background: #f5e9bf;
+
+// // https://lospec.com/palette-list/blush-gb
+// $palette-foreground: #5e5768;
+// $palette-link: #0cc0d4;
+// $palette-active: #fe9192;
+// $palette-background: #fcdebe;
+
+// // https://lospec.com/palette-list/retro-vibes
+// $palette-foreground: #564756;
+// $palette-link: #507dba;
+// $palette-active: #5acca0;
+// $palette-background: #e5f7d2;
+
+// // https://lospec.com/palette-list/mangavania
+// $palette-foreground: #b03e80;
+// $palette-link: #ff8acd;
+// $palette-active: #4aedff;
+// $palette-background: #ffffff;
+
+
+@font-face {
+  font-family: "Blox Brk";
+  src: url(/assets/fonts/blox-brk.regular.ttf);
+}
+
+@font-face {
+  font-family: "Yoster Island";
+  src: url(/assets/fonts/yoster-island.regular.ttf);
+  size-adjust: 70%;
+}
+
+@font-face {
+  font-family: "Disposable Droid BB";
+  src: url(/assets/fonts/disposabledroid-bb.regular.ttf);
+}
+
+@font-face {
+  font-family: "Disposable Droid BB";
+  src: url(/assets/fonts/disposabledroid-bb.bold.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Disposable Droid BB";
+  src: url(/assets/fonts/disposabledroid-bb.italic.ttf);
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Disposable Droid BB";
+  src: url(/assets/fonts/disposabledroid-bb.bold-italic.ttf);
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Disposable Droid BB";
+  src: url(/assets/fonts/disposabledroid-bb.italic.ttf);
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: "Disposable Droid BB";
+  src: url(/assets/disposabledroid-bb.bold-italic.ttf);
+  font-weight: bold;
+  font-style: oblique;
+}
+
+body {
+  display: flex;
+  // align-items: center;
+  justify-content: center;
+  font-family: "Disposable Droid BB";
+  color: $palette-foreground;
+  background-color: $palette-background;
+
+  .script {
+    font-family: "Yoster Island";
+  }
+
+  .active {
+    color: $palette-active;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+a:link,
+a:visited {
+  color: $palette-link;
+}
+
+a:hover {
+  color: $palette-active;
+}
+
+main {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+
+  p {
+    margin: 20px 0;
+    font-size: 15px;
+    line-height: 20px;
+    max-width: 33em;
+  }
+
+  h1 {
+    font-family: "Blox Brk";
+    font-size: 80px;
+    font-weight: normal;
+    line-height: 90px;
+    letter-spacing: -1px;
+  }
+
+  h2 {
+    font-size: 180%;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+  }
+
+  h3 {
+    font-size: 120%;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+  }
+}
+
+header {
+  margin-top: 20ex;
+  margin-bottom: 4ex;
+
+  nav {
+    ul {
+      list-style-type: none;
+      text-align: left;
+      margin-right: 2rem;
+      margin-left: 0;
+      padding-left: 0;
+
+      li {
+        font-size: 20px;
+        text-transform: uppercase;
+        margin-left: 0;
+        padding-left: 0;
+        margin-right: 1rem;
+        margin-top: 1ex;
+      }
+    }
+  }
+}

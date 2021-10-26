@@ -1,0 +1,167 @@
+---
+kind: pipeline
+type: docker
+name: build website
+trigger:
+  event:
+  - tag
+  - push
+
+steps:
+- name: restore cache
+  image: plugins/s3-cache
+  settings:
+    endpoint:
+      from_secret: s3_endpoint
+    access_key:
+      from_secret: s3_access_key
+    secret_key:
+      from_secret: s3_secret_key
+    root: drone
+    restore: true
+
+- name: nanoc build
+  image: docker.claudiomattera.it/claudiomattera/nanoc:latest
+  commands:
+  - nanoc compile
+
+- name: nanoc check
+  failure: ignore
+  image: docker.claudiomattera.it/claudiomattera/nanoc:latest
+  commands:
+  - nanoc check
+
+- name: nanoc check external links
+  failure: ignore
+  image: docker.claudiomattera.it/claudiomattera/nanoc:latest
+  commands:
+  - nanoc check external_links
+
+- name: rebuild cache
+  image: plugins/s3-cache
+  settings:
+    endpoint:
+      from_secret: s3_endpoint
+    access_key:
+      from_secret: s3_access_key
+    secret_key:
+      from_secret: s3_secret_key
+    root: drone
+    rebuild: true
+    mount:
+      - "./output/"
+      - "./tmp/"
+
+###############################################################################
+
+---
+kind: pipeline
+type: docker
+name: deploy website
+trigger:
+  event:
+  - promote
+  target:
+  - neocities
+
+steps:
+- name: nanoc build
+  image: docker.claudiomattera.it/claudiomattera/nanoc:latest
+  commands:
+  - apt-get update
+  - apt-get install -y ruby-dev build-essential
+  - bundle
+  - bundle exec nanoc compile
+
+- name: deploy website
+  image: alpine:3.12
+  commands:
+    - apk update
+    - apk add curl
+    - find . -type f -not -path "./assets/games/*" -exec curl --fail --oauth2-bearer "$NEOCITIES_API_KEY" -F "{}=@{}" https://neocities.org/api/upload \;
+
+###############################################################################
+
+---
+kind: pipeline
+type: docker
+name: notification build
+
+depends_on:
+- build website
+
+trigger:
+  event:
+  - push
+  - tag
+  status:
+  - failure
+
+steps:
+- name: notification
+  image: docker.claudiomattera.it/claudiomattera/drone-gotify:1
+  settings:
+    host:
+      from_secret: gotify_host
+    token:
+      from_secret: gotify_token
+    title: >
+        {% if drone.tag is defined %}
+        {% set repo_name = drone.repo.name ~ "-" ~ drone.tag -%}
+        {% else %}
+        {% set repo_name = drone.repo.name -%}
+        {% endif %}
+
+        {% if drone.build.status == "success" %}
+        ✓ Build succeeded for {{ repo_name }}
+        {% else %}
+        ✗ Build failed for {{ repo_name }}
+        {% endif %}
+    message: >
+        {% if drone.build.status == "success" %}
+        {% else %}
+        Failed steps:
+
+        {% for stage in drone.failed.stages | split(pat=",") %}
+        - {{ stage }}
+        {% endfor %}
+        {% endif %}
+
+        {% set build_link = drone.system.proto ~ "://" ~ drone.system.host ~ "/" ~ drone.repo.owner ~ "/" ~ drone.repo.name ~ "/" ~ drone.build.number -%}
+        See the complete report at <{{ build_link }}>.
+
+###############################################################################
+
+---
+kind: pipeline
+type: docker
+name: notification deploy
+
+depends_on:
+- deploy website
+
+trigger:
+  event:
+  - promote
+  status:
+  - failure
+
+steps:
+- name: notification
+  image: docker.claudiomattera.it/claudiomattera/drone-gotify:1
+  settings:
+    host:
+      from_secret: gotify_host
+    token:
+      from_secret: gotify_token
+    title: >
+        ✗ Deployment to {{drone.deploy.to}} failed for {{drone.repo.name}}-{{drone.tag}}
+    message: >
+        Failed stages:
+
+        {% for stage in drone.failed.stages | split(pat=",") %}
+        - {{ stage }}
+        {% endfor %}
+
+        {% set build_link = drone.system.proto ~ "://" ~ drone.system.host ~ "/" ~ drone.repo.owner ~ "/" ~ drone.repo.name ~ "/" ~ drone.build.number -%}
+        See the complete report at <{{ build_link }}>.
