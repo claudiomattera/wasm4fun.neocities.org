@@ -78,6 +78,7 @@ steps:
   commands:
     - apk update
     - apk add curl
+    - cd output
     - find . -type f -not -path "./assets/games/*" -exec curl --fail --oauth2-bearer "$NEOCITIES_API_KEY" -F "{}=@{}" https://neocities.org/api/upload \;
 
 ###############################################################################
