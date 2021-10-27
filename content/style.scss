@@ -152,6 +152,20 @@ main {
   div.centred {
     text-align: center;
   }
+
+  ul {
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: center;
+      height: 7ex;
+
+      img {
+        margin-right: 1rem;
+      }
+    }
+  }
 }
 
 header {

@@ -37,6 +37,9 @@ compile '/**/*.scss' do
   write @item.identifier.without_ext + '.css'
 end
 
+compile '/**/*.aseprite' do
+end
+
 compile '/**/*' do
   write item.identifier.to_s
 end
