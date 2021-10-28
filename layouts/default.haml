@@ -14,9 +14,8 @@
           %ul
             %li
               = link_to_unless_current('home', '/')
-            %li
-              = link_to_unless_current('minesweeper', '/minesweeper/')
-            %li
-              = link_to_unless_current('cosmo-fighter', '/cosmo-fighter/')
+            - @items.select { |item| item[:game] }.each do |item|
+              %li
+                = link_to_unless_current(item[:title], item)
       %main
         = yield
