@@ -1,7 +1,12 @@
 WASM4FUN
 ====
 
-Source of static website at <https://wasm4fun.neocities.org/>
+Rust games for the [WASM-4] fantasy console
+
+This is the source code of static website WASM4FUN.
+Check out the actual website at <https://wasm4fun.neocities.org/>.
+
+[WASM-4]: https://wasm4.org/
 
 
 License
