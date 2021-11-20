@@ -5,37 +5,6 @@ $palette-link: #eb6b6f;
 $palette-active: #f9a875;
 $palette-background: #fff6d3;
 
-// // https://lospec.com/palette-list/bicycle
-// $palette-foreground: #161616;
-// $palette-link: #ab4646;
-// $palette-active: #8f9bf6;
-// $palette-background: #f0f0f0;
-
-// // https://lospec.com/palette-list/dustbyte
-// $palette-foreground: #372a39;
-// $palette-link: #aa644d;
-// $palette-active: #788374;
-// $palette-background: #f5e9bf;
-
-// // https://lospec.com/palette-list/blush-gb
-// $palette-foreground: #5e5768;
-// $palette-link: #0cc0d4;
-// $palette-active: #fe9192;
-// $palette-background: #fcdebe;
-
-// // https://lospec.com/palette-list/retro-vibes
-// $palette-foreground: #564756;
-// $palette-link: #507dba;
-// $palette-active: #5acca0;
-// $palette-background: #e5f7d2;
-
-// // https://lospec.com/palette-list/mangavania
-// $palette-foreground: #b03e80;
-// $palette-link: #ff8acd;
-// $palette-active: #4aedff;
-// $palette-background: #ffffff;
-
-
 @font-face {
   font-family: "Blox Brk";
   src: url(/assets/fonts/blox-brk.regular.ttf);
@@ -86,7 +55,6 @@ $palette-background: #fff6d3;
 
 body {
   display: flex;
-  // align-items: center;
   justify-content: center;
   font-family: "Disposable Droid BB";
   color: $palette-foreground;
