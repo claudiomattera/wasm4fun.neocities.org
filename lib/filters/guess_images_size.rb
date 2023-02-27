@@ -1,4 +1,4 @@
-require 'nokogumbo'
+require 'nokogiri'
 require 'image_size'
 
 class GuessImagesSizeFilter < Nanoc::Filter

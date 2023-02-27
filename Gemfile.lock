@@ -1,78 +1,88 @@
 GEM
-  specs:
-
-GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
-    builder (3.2.4)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
+    bibtex-ruby (6.0.0)
+      latex-decode (~> 0.0)
+    citeproc (1.0.10)
+      namae (~> 1.0)
+    citeproc-ruby (2.0.0)
+      citeproc (~> 1.0, >= 1.0.9)
+      csl (~> 2.0)
     colored (1.2)
-    concurrent-ruby (1.1.9)
+    concurrent-ruby (1.2.0)
     cri (2.15.11)
-    ddmemoize (1.0.0)
-      ddmetrics (~> 1.0)
-      ref (~> 2.0)
+    csl (2.0.0)
+      namae (~> 1.0)
+      rexml
+    csl-styles (2.0.1)
+      csl (~> 2.0)
     ddmetrics (1.0.1)
     ddplugin (1.0.3)
-    diff-lcs (1.4.4)
-    ffi (1.15.4)
+    diff-lcs (1.5.0)
+    ffi (1.15.5)
     haml (5.2.2)
       temple (>= 0.8.0)
       tilt
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
-    htmlbeautifier (1.3.1)
-    image_size (3.0.1)
-    json (2.6.1)
+    htmlbeautifier (1.4.2)
+    image_size (3.2.0)
+    json (2.6.3)
+    json-schema (3.0.0)
+      addressable (>= 2.8)
     json_schema (0.21.0)
-    kramdown (2.3.1)
+    kramdown (2.4.0)
       rexml
-    nanoc (4.12.3)
+    latex-decode (0.4.0)
+    memo_wise (1.7.0)
+    namae (1.1.1)
+    nanoc (4.12.15)
       addressable (~> 2.5)
       colored (~> 1.2)
-      nanoc-checking (~> 1.0)
-      nanoc-cli (= 4.12.3)
-      nanoc-core (= 4.12.3)
+      nanoc-checking (~> 1.0, >= 1.0.2)
+      nanoc-cli (= 4.12.15)
+      nanoc-core (= 4.12.15)
       nanoc-deploying (~> 1.0)
       parallel (~> 1.12)
       tty-command (~> 0.8)
       tty-which (~> 0.4)
-    nanoc-checking (1.0.1)
-      nanoc-cli (~> 4.11, >= 4.11.15)
-      nanoc-core (~> 4.11, >= 4.11.15)
-    nanoc-cli (4.12.3)
+    nanoc-checking (1.0.2)
+      nanoc-cli (~> 4.12, >= 4.12.4)
+      nanoc-core (~> 4.12, >= 4.12.4)
+    nanoc-cli (4.12.15)
       cri (~> 2.15)
       diff-lcs (~> 1.3)
-      nanoc-core (= 4.12.3)
+      nanoc-core (= 4.12.15)
       zeitwerk (~> 2.1)
-    nanoc-core (4.12.3)
+    nanoc-core (4.12.15)
       concurrent-ruby (~> 1.1)
-      ddmemoize (~> 1.0)
       ddmetrics (~> 1.0)
       ddplugin (~> 1.0)
       hamster (~> 3.0)
       json_schema (~> 0.19)
+      memo_wise (~> 1.5)
+      psych (~> 4.0)
       slow_enumerator_tools (~> 1.0)
       tty-platform (~> 0.2)
       zeitwerk (~> 2.1)
-    nanoc-deploying (1.0.1)
+    nanoc-deploying (1.0.2)
       nanoc-checking (~> 1.0)
       nanoc-cli (~> 4.11, >= 4.11.15)
       nanoc-core (~> 4.11, >= 4.11.15)
-    nokogiri (1.12.5-x86_64-linux)
+    nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
-    nokogumbo (2.0.5)
-      nokogiri (~> 1.8, >= 1.8.4)
-    parallel (1.21.0)
+    parallel (1.22.1)
     pastel (0.8.0)
       tty-color (~> 0.5)
-    public_suffix (4.0.6)
-    racc (1.6.0)
-    rb-fsevent (0.11.0)
+    psych (4.0.6)
+      stringio
+    public_suffix (5.0.1)
+    racc (1.6.2)
+    rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    ref (2.0.0)
     rexml (3.2.5)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
@@ -80,32 +90,37 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
     slow_enumerator_tools (1.1.0)
-    temple (0.8.2)
-    tilt (2.0.10)
+    stringio (3.0.5)
+    temple (0.10.0)
+    tilt (2.1.0)
     tty-color (0.6.0)
     tty-command (0.10.1)
       pastel (~> 0.8)
     tty-platform (0.3.0)
     tty-which (0.5.0)
-    w3c_validators (1.3.6)
+    w3c_validators (1.3.7)
       json (>= 1.8)
       nokogiri (~> 1.6)
       rexml (~> 3.2)
-    zeitwerk (2.5.1)
+    zeitwerk (2.6.7)
 
 PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  builder!
-  haml!
+  bibtex-ruby!
+  citeproc-ruby!
+  csl-styles!
+  haml (~> 5)!
   htmlbeautifier!
   image_size!
+  json!
+  json-schema!
   kramdown!
   nanoc (~> 4.12)!
-  nokogumbo!
+  nokogiri!
   sass!
   w3c_validators!
 
 BUNDLED WITH
-   2.2.17
+   2.4.7
