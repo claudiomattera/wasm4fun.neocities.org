@@ -9,7 +9,7 @@ trigger:
 
 steps:
 - name: restore cache
-  image: plugins/s3-cache
+  image: docker-proxy.claudiomattera.it/plugins/s3-cache
   settings:
     endpoint:
       from_secret: s3_endpoint
@@ -23,22 +23,22 @@ steps:
 - name: nanoc build
   image: docker.claudiomattera.it/claudiomattera/nanoc:latest
   commands:
-  - nanoc compile
+  - bundle exec nanoc compile
 
 - name: nanoc check
   failure: ignore
   image: docker.claudiomattera.it/claudiomattera/nanoc:latest
   commands:
-  - nanoc check
+  - bundle exec nanoc check
 
 - name: nanoc check external links
   failure: ignore
   image: docker.claudiomattera.it/claudiomattera/nanoc:latest
   commands:
-  - nanoc check external_links
+  - bundle exec nanoc check external_links
 
 - name: rebuild cache
-  image: plugins/s3-cache
+  image: docker-proxy.claudiomattera.it/plugins/s3-cache
   settings:
     endpoint:
       from_secret: s3_endpoint
@@ -57,7 +57,54 @@ steps:
 ---
 kind: pipeline
 type: docker
-name: deploy website
+name: deploy website to staging
+trigger:
+  event:
+  - promote
+  target:
+  - staging
+
+steps:
+- name: nanoc build
+  image: docker.claudiomattera.it/claudiomattera/nanoc:latest
+  commands:
+  - bundle exec nanoc compile
+
+- name: deploy website to staging
+  when:
+    event:
+    - promote
+    target:
+    - staging
+  image: docker-proxy.claudiomattera.it/s3cmd/s3cmd:latest
+  environment:
+    ENDPOINT:
+      from_secret: s3_endpoint_staging
+    BUCKET:
+      from_secret: s3_bucket_staging
+    ACCESS_KEY:
+      from_secret: s3_access_key_staging
+    SECRET_KEY:
+      from_secret: s3_secret_key_staging
+  commands:
+    - s3cmd
+      --access_key="$${ACCESS_KEY}"
+      --secret_key="$${SECRET_KEY}"
+      --host="$${ENDPOINT}"
+      --host-bucket="$${ENDPOINT}"
+      --ca-certs=/etc/ssl/certs/ca-certificates.crt
+      sync
+      --no-mime-magic
+      --delete-removed
+      ./output/
+      "s3://$${BUCKET}"
+
+###############################################################################
+
+---
+kind: pipeline
+type: docker
+name: deploy website to production
 trigger:
   event:
   - promote
@@ -68,13 +115,10 @@ steps:
 - name: nanoc build
   image: docker.claudiomattera.it/claudiomattera/nanoc:latest
   commands:
-  - apt-get update
-  - apt-get install -y ruby-dev build-essential
-  - bundle
   - bundle exec nanoc compile
 
 - name: deploy website
-  image: alpine:3.12
+  image: docker-proxy.claudiomattera.it/library/alpine:3.16
   commands:
     - apk update
     - apk add curl
@@ -139,7 +183,8 @@ type: docker
 name: notification deploy
 
 depends_on:
-- deploy website
+- deploy website to staging
+- deploy website to production
 
 trigger:
   event:
